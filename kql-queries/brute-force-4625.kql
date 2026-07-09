@@ -1,0 +1,9 @@
+// Brute Force - Multiple Failed Logons
+// MITRE: T1110 Credential Access
+// Detects 3+ failed logon attempts from same account within 1 hour
+
+SecurityEvent
+| where EventID == 4625
+| summarize FailedLogons = count() by Account, Computer, IpAddress, bin(TimeGenerated, 1h)
+| where FailedLogons >= 3
+| order by FailedLogons desc

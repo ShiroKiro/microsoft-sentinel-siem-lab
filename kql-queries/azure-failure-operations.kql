@@ -1,0 +1,8 @@
+// Repeated Failure Operations - Azure Activity
+// MITRE: T1078 Initial Access
+// Detects multiple failed Azure operations from same caller within 1 hour
+AzureActivity
+| where ActivityStatusValue == "Failure"
+| summarize FailureCount = count() by Caller, CallerIpAddress, bin(TimeGenerated, 1h)
+| where FailureCount >= 2
+| order by FailureCount desc

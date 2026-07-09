@@ -1,33 +1,36 @@
-# Detection: Repeated Failure Operations
+# Detection: Brute Force - Multiple Failed Logons
 
 ## Description
-Detects multiple failed Azure operations from the same caller 
-within a 1-hour window. May indicate unauthorized access attempts 
-or brute force activity.
+Detects multiple failed logon attempts from the same account within 
+a 1-hour window. May indicate brute force or password spray attack.
 
 ## KQL Query
+See `/kql-queries/brute-force-4625.kql`
+
 ```kql
-AzureActivity
-| where ActivityStatusValue == "Failure"
-| summarize FailureCount = count() by Caller, CallerIpAddress, bin(TimeGenerated, 1h)
-| where FailureCount >= 2
-| order by FailureCount desc
+SecurityEvent
+| where EventID == 4625
+| summarize FailedLogons = count() by Account, Computer, IpAddress, bin(TimeGenerated, 1h)
+| where FailedLogons >= 3
+| order by FailedLogons desc
 ```
 
-## MITRE ATT&CK Mapping
+## MITRE ATT&CK
 | Field | Value |
 |-------|-------|
-| Tactic | Initial Access |
-| Technique | Valid Accounts (T1078) |
-| Severity | Medium |
+| Tactic | Credential Access |
+| Technique | T1110 Brute Force |
+| Severity | High |
 
 ## Analytics Rule
-- Rule name: `Repeated Failure Operations Detected`
-- Run every: 5 hours
-- Lookback: 5 hours
-- Threshold: > 0 results
+- **Name:** `Brute Force - Multiple Failed Logons`
+- **Run every:** 5 hours
+- **Lookback:** 5 hours
+- **Threshold:** >= 3 failed logons per hour
 
 ## False Positive Analysis
-Authorized administrators performing lab setup or configuration 
-changes may trigger this rule. Verify caller identity and 
-operation context before escalating.
+Authorized users mistyping passwords may trigger this rule.
+Verify account identity and check for successful logon after failures.
+
+## Evidence
+![Analytics Rule](../screenshots/day2-03-analytics-rule.png)

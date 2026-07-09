@@ -1,0 +1,7 @@
+// Suspicious Local Account Deletion
+// MITRE: T1070 Defense Evasion
+// Detects deletion of local user accounts
+SecurityEvent
+| where EventID == 4726
+| project TimeGenerated, Account, TargetAccount, Computer, Activity
+| order by TimeGenerated desc
