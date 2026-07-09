@@ -21,17 +21,24 @@ both self-hosted and cloud security platforms.
 ---
 
 ## Architecture
-Azure Subscription
-├── Log Analytics Workspace (law-soc-lab)
-│   └── Microsoft Sentinel
-│       ├── Data Sources
-│       │   ├── Azure Activity Logs (subscription-level)
-│       │   └── Windows Security Events via AMA (ServerLabVM)
-│       ├── Analytics Rules (4 active)
-│       ├── Incidents
-│       └── Workbooks (SOC-Lab-Dashboard)
-└── ServerLabVM (Windows Server 2022, deallocated after use)
 
+**Data Flow:**
+Azure Subscription → Log Analytics Workspace (law-soc-lab) → Microsoft Sentinel
+
+**Data Sources:**
+- Azure Activity Logs — subscription-level operations monitoring
+- Windows Security Events via AMA — endpoint security events from ServerLabVM
+
+**Detection Layer:**
+- 4 Analytics Rules with MITRE ATT&CK mapping
+- Automated incident creation and assignment
+
+**Components:**
+- `law-soc-lab` — Log Analytics Workspace (North Europe)
+- `ServerLabVM` — Windows Server 2022 (Sweden Central, deallocated after use)
+- `SOC-Lab-Dashboard` — Sentinel Workbook
+
+📸 See `/architecture/lab-diagram.png`
 ---
 
 ## Detection Scenarios
