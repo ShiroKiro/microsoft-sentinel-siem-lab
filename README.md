@@ -38,7 +38,7 @@ Azure Subscription → Log Analytics Workspace (law-soc-lab) → Microsoft Senti
 - `ServerLabVM` — Windows Server 2022 (Sweden Central, deallocated after use)
 - `SOC-Lab-Dashboard` — Sentinel Workbook
 
-![Lab Architecture](./architecture/lab-diagram.png)
+**[📊 View Lab Architecture Diagram](architecture/lab-diagram.png)**
 ---
 
 ## Detection Scenarios
