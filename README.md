@@ -164,4 +164,12 @@ This lab is the enterprise continuation of my
 | Query language | Lucene/Wazuh rules | KQL |
 | Alerting | Custom rules | Analytics Rules + MITRE |
 
+## Roadmap / Next Steps
+
+- **Microsoft Defender for Endpoint (EDR) integration** — planned extension to onboard 
+  the lab VM into Defender for Endpoint and ingest endpoint telemetry into Sentinel via 
+  the Defender XDR connector. Activation is currently pending trial licensing 
+  (billing verification requires an EU-issued payment method); will be completed and 
+  documented as a follow-up commit.
+
 Together they demonstrate SIEM understanding across both levels.
